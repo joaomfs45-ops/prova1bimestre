@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Controle simples de despesas joao</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h2>Controle de despesas do joao</h2>
+
+  <p>Saldo: <span id="balance">0</span></p>
+  <p>Receitas: <span id="money-plus">0</span></p>
+  <p>Despesas: <span id="money-minus">0</span></p>
+
+  <h3>Adicionar</h3>
+
+  <form id="form">
+    <input type="text" id="text" placeholder="Nome">
+    <input type="number" id="amount" placeholder="Valor">
+    <input type="text" id="category" placeholder="Categoria">
+    <button>Adicionar</button>
+  </form>
+
+  <h3>Lista</h3>
+  <ul id="transactions"></ul>
+
+  <script src="script.js"></script>
+</body>
+</html>
