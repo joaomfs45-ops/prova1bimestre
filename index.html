@@ -2,29 +2,44 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>Controle simples de despesas joao</title>
+  <title>Controle de Despesas do joao</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <h2>Controle de despesas do joao</h2>
+  <div class="container">
+    <h2>💰 Controle de Despesas do joao</h2>
 
-  <p>Saldo: <span id="balance">0</span></p>
-  <p>Receitas: <span id="money-plus">0</span></p>
-  <p>Despesas: <span id="money-minus">0</span></p>
+    <div class="summary">
+      <div>
+        <h4>Saldo</h4>
+        <p id="balance">R$ 0</p>
+      </div>
+      <div>
+        <h4>Receitas</h4>
+        <p id="money-plus" class="plus">R$ 0</p>
+      </div>
+      <div>
+        <h4>Despesas</h4>
+        <p id="money-minus" class="minus">R$ 0</p>
+      </div>
+    </div>
 
-  <h3>Adicionar</h3>
+    <h3>Adicionar gasto</h3>
 
-  <form id="form">
-    <input type="text" id="text" placeholder="Nome">
-    <input type="number" id="amount" placeholder="Valor">
-    <input type="text" id="category" placeholder="Categoria">
-    <button>Adicionar</button>
-  </form>
+    <form id="form">
+      <input type="text" id="text" placeholder="Descrição">
+      <input type="number" id="amount" placeholder="Valor (use negativo para despesas)">
+      <input type="text" id="category" placeholder="Categoria">
+      <button type="submit">Adicionar</button>
+    </form>
 
-  <h3>Lista</h3>
-  <ul id="transactions"></ul>
+    <h3>Lista</h3>
+    <ul id="transactions"></ul>
+  </div>
 
   <script src="script.js"></script>
 </body>
 </html>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">

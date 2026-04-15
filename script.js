@@ -10,19 +10,27 @@ const inputCategory = document.querySelector('#category');
 
 let transactions = [];
 
-// adicionar na tela
+// Renderizar lista
 function addTransactionDOM(transaction) {
   const li = document.createElement('li');
 
-  li.innerText =
-    transaction.name +
-    " (" + transaction.category + ") - " +
-    transaction.amount;
+  if (Math.abs(transaction.amount) > 100) {
+    li.classList.add('high');
+  }
+
+  li.innerHTML = `
+    <span onclick="editTransaction(${transaction.id})">
+      ${transaction.name} (${transaction.category}) - R$ ${transaction.amount}
+    </span>
+    <div class="actions">
+      <button onclick="removeTransaction(${transaction.id})">❌</button>
+    </div>
+  `;
 
   transactionsUl.appendChild(li);
 }
 
-// atualizar valores
+// Atualizar valores
 function updateValues() {
   let total = 0;
   let income = 0;
@@ -38,12 +46,19 @@ function updateValues() {
     }
   });
 
-  balanceDisplay.innerText = total;
-  incomeDisplay.innerText = income;
-  expenseDisplay.innerText = Math.abs(expense);
+  balanceDisplay.innerText = `R$ ${total}`;
+  incomeDisplay.innerText = `R$ ${income}`;
+  expenseDisplay.innerText = `R$ ${Math.abs(expense)}`;
 }
 
-// submit
+// Recarregar tudo
+function init() {
+  transactionsUl.innerHTML = '';
+  transactions.forEach(addTransactionDOM);
+  updateValues();
+}
+
+// Adicionar
 form.addEventListener('submit', function(e) {
   e.preventDefault();
 
@@ -52,11 +67,12 @@ form.addEventListener('submit', function(e) {
   const category = inputCategory.value;
 
   if (!name || !amount || !category) {
-    alert("Preencha tudo");
+    alert("Preencha todos os campos");
     return;
   }
 
   const transaction = {
+    id: Date.now(),
     name: name,
     amount: amount,
     category: category
@@ -64,11 +80,32 @@ form.addEventListener('submit', function(e) {
 
   transactions.push(transaction);
 
-  addTransactionDOM(transaction);
-  updateValues();
+  init();
 
-  // limpar
   inputName.value = "";
   inputAmount.value = "";
   inputCategory.value = "";
 });
+
+// Remover
+function removeTransaction(id) {
+  transactions = transactions.filter(t => t.id !== id);
+  init();
+}
+
+// Editar
+function editTransaction(id) {
+  const transaction = transactions.find(t => t.id === id);
+
+  const newName = prompt("Editar descrição:", transaction.name);
+  const newAmount = prompt("Editar valor:", transaction.amount);
+  const newCategory = prompt("Editar categoria:", transaction.category);
+
+  if (!newName || !newAmount || !newCategory) return;
+
+  transaction.name = newName;
+  transaction.amount = Number(newAmount);
+  transaction.category = newCategory;
+
+  init();
+}
